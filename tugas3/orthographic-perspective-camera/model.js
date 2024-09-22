@@ -1,16 +1,13 @@
-// Inisialisasi variabel global
+
 let rotation = [0, 0, 0]; // Rotasi objek di sekitar sumbu x, y, z
 let scaling = [1, 1, 1];  // Skala objek di x, y, z
-
 let currentlyPressedKeys = {}; // Status tombol keyboard
-
 let usePerspective = true; // Mulai dengan proyeksi perspektif
 
 // Variabel kamera
-let cameraPosition = [0, 0, 10]; // Posisi kamera di ruang dunia
+let cameraPosition = [0, 0, 10]; // Posisi kamera
 let cameraTarget = [0, 0, 0];    // Titik yang dilihat kamera (pusat objek)
 let up = [0, 1, 0];              // Vektor up kamera
-
 let cameraAngle = 0;             // Sudut kamera mengelilingi objek
 let cameraRadius = 10;           // Jarak kamera dari objek
 
@@ -27,7 +24,7 @@ function main() {
     return;
   }
 
-  // Tambahkan event listener untuk keyboard
+  // event listener untuk keyboard
   document.addEventListener("keydown", handleKeyDown, false);
   document.addEventListener("keyup", handleKeyUp, false);
 
@@ -60,7 +57,7 @@ function main() {
     }
   `;
 
-  // Fragment shader program
+  // Fragment shader
   const fsSource = `
     precision mediump float;
 
@@ -75,10 +72,9 @@ function main() {
     }
   `;
 
-  // Inisialisasi shader program
+  // Inisialisasi shader
   const shaderProgram = initShaderProgram(wgl, vsSource, fsSource);
 
-  // Periksa apakah shaderProgram berhasil dibuat
   if (!shaderProgram) {
     console.error("Shader program tidak berhasil dibuat.");
     return;
@@ -126,37 +122,37 @@ function initBuffers(wgl) {
   wgl.bindBuffer(wgl.ARRAY_BUFFER, positionBuffer);
 
   const positions = [
-    // Muka depan
+    // depan
     -1.0, -1.0, 1.0,
      1.0, -1.0, 1.0,
      1.0,  1.0, 1.0,
     -1.0,  1.0, 1.0,
 
-    // Muka belakang
+    // belakang
     -1.0, -1.0, -1.0,
     -1.0,  1.0, -1.0,
      1.0,  1.0, -1.0,
      1.0, -1.0, -1.0,
 
-    // Muka atas
+    // atas
     -1.0,  1.0, -1.0,
     -1.0,  1.0,  1.0,
      1.0,  1.0,  1.0,
      1.0,  1.0, -1.0,
 
-    // Muka bawah
+    // bawah
     -1.0, -1.0, -1.0,
      1.0, -1.0, -1.0,
      1.0, -1.0,  1.0,
     -1.0, -1.0,  1.0,
 
-    // Muka kanan
+    // kanan
      1.0, -1.0, -1.0,
      1.0,  1.0, -1.0,
      1.0,  1.0,  1.0,
      1.0, -1.0,  1.0,
 
-    // Muka kiri
+    // kiri
     -1.0, -1.0, -1.0,
     -1.0, -1.0,  1.0,
     -1.0,  1.0,  1.0,
@@ -174,37 +170,37 @@ function initBuffers(wgl) {
   wgl.bindBuffer(wgl.ARRAY_BUFFER, normalBuffer);
 
   const vertexNormals = [
-    // Muka depan
+    // depan
      0.0,  0.0,  1.0,
      0.0,  0.0,  1.0,
      0.0,  0.0,  1.0,
      0.0,  0.0,  1.0,
 
-    // Muka belakang
+    // belakang
      0.0,  0.0, -1.0,
      0.0,  0.0, -1.0,
      0.0,  0.0, -1.0,
      0.0,  0.0, -1.0,
 
-    // Muka atas
+    // atas
      0.0,  1.0,  0.0,
      0.0,  1.0,  0.0,
      0.0,  1.0,  0.0,
      0.0,  1.0,  0.0,
 
-    // Muka bawah
+    // bawah
      0.0, -1.0,  0.0,
      0.0, -1.0,  0.0,
      0.0, -1.0,  0.0,
      0.0, -1.0,  0.0,
 
-    // Muka kanan
+    // kanan
      1.0,  0.0,  0.0,
      1.0,  0.0,  0.0,
      1.0,  0.0,  0.0,
      1.0,  0.0,  0.0,
 
-    // Muka kiri
+    // kiri
     -1.0,  0.0,  0.0,
     -1.0,  0.0,  0.0,
     -1.0,  0.0,  0.0,
@@ -222,32 +218,32 @@ function initBuffers(wgl) {
   wgl.bindBuffer(wgl.ARRAY_BUFFER, textureCoordBuffer);
 
   const textureCoordinates = [
-    // Muka depan
+    // depan
     0.0,  0.0,
     1.0,  0.0,
     1.0,  1.0,
     0.0,  1.0,
-    // Muka belakang
+    // belakang
     0.0,  0.0,
     1.0,  0.0,
     1.0,  1.0,
     0.0,  1.0,
-    // Muka atas
+    // atas
     0.0,  0.0,
     1.0,  0.0,
     1.0,  1.0,
     0.0,  1.0,
-    // Muka bawah
+    // bawah
     0.0,  0.0,
     1.0,  0.0,
     1.0,  1.0,
     0.0,  1.0,
-    // Muka kanan
+    // kanan
     0.0,  0.0,
     1.0,  0.0,
     1.0,  1.0,
     0.0,  1.0,
-    // Muka kiri
+    // kiri
     0.0,  0.0,
     1.0,  0.0,
     1.0,  1.0,
@@ -265,12 +261,12 @@ function initBuffers(wgl) {
   wgl.bindBuffer(wgl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
   const indices = [
-     0,  1,  2,      0,  2,  3,    // muka depan
-     4,  5,  6,      4,  6,  7,    // muka belakang
-     8,  9, 10,      8, 10, 11,    // muka atas
-    12, 13, 14,     12, 14, 15,    // muka bawah
-    16, 17, 18,     16, 18, 19,    // muka kanan
-    20, 21, 22,     20, 22, 23,    // muka kiri
+     0,  1,  2,      0,  2,  3,    // depan
+     4,  5,  6,      4,  6,  7,    // belakang
+     8,  9, 10,      8, 10, 11,    // atas
+    12, 13, 14,     12, 14, 15,    // bawah
+    16, 17, 18,     16, 18, 19,    // kanan
+    20, 21, 22,     20, 22, 23,    // kiri
   ];
 
   wgl.bufferData(
@@ -312,7 +308,7 @@ function loadTexture(wgl, url) {
     pixel
   );
 
-  // Muat gambar secara asinkron
+  // load gambar secara asinkron
   const image = new Image();
   image.onload = function () {
     wgl.bindTexture(wgl.TEXTURE_2D, texture);
@@ -324,8 +320,6 @@ function loadTexture(wgl, url) {
       srcType,
       image
     );
-
-    // Periksa apakah dimensi adalah power of 2
     if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
       wgl.generateMipmap(wgl.TEXTURE_2D);
     } else {
@@ -347,14 +341,14 @@ function getProjectionMatrix(wgl) {
   const projectionMatrix = mat4.create();
 
   if (usePerspective) {
-    // Proyeksi Perspektif
+    // Proyeksi perspektif
     const fieldOfView = (45 * Math.PI) / 180; // dalam radian
     const aspect = wgl.canvas.clientWidth / wgl.canvas.clientHeight;
     const zNear = 0.1;
     const zFar = 100.0;
     mat4.perspective(projectionMatrix, fieldOfView, aspect, zNear, zFar);
   } else {
-    // Proyeksi Ortografis
+    // Proyeksi ortografis
     const aspect = wgl.canvas.clientWidth / wgl.canvas.clientHeight;
     const scale = 5.0;
     const left = -scale * aspect;
@@ -377,29 +371,28 @@ function drawScene(wgl, programInfo, buffers, texture, deltaTime) {
 
   wgl.clear(wgl.COLOR_BUFFER_BIT | wgl.DEPTH_BUFFER_BIT);
 
-  // Dapatkan matriks proyeksi yang sesuai
   const projectionMatrix = getProjectionMatrix(wgl);
 
-  // Buat matriks view
+  // buat matriks view
   const viewMatrix = mat4.create();
   mat4.lookAt(viewMatrix, cameraPosition, cameraTarget, up);
 
-  // Buat matriks model
+  // buat matriks model
   const modelMatrix = mat4.create();
 
-  // Terapkan rotasi pada objek
+  // rotasi pada objek
   mat4.rotateX(modelMatrix, modelMatrix, rotation[0]);
   mat4.rotateY(modelMatrix, modelMatrix, rotation[1]);
   mat4.rotateZ(modelMatrix, modelMatrix, rotation[2]);
 
-  // Terapkan scaling pada objek
+  // scaling pada objek
   mat4.scale(modelMatrix, modelMatrix, scaling);
 
-  // Hitung matriks model-view dengan mengalikan viewMatrix dan modelMatrix
+  // hitung matriks model-view dengan mengalikan viewMatrix dan modelMatrix
   const modelViewMatrix = mat4.create();
   mat4.multiply(modelViewMatrix, viewMatrix, modelMatrix);
 
-  // Hitung matriks normal
+  // hitung matriks normal
   const normalMatrix = mat4.create();
   mat4.invert(normalMatrix, modelViewMatrix);
   mat4.transpose(normalMatrix, normalMatrix);
@@ -461,13 +454,13 @@ function drawScene(wgl, programInfo, buffers, texture, deltaTime) {
     wgl.enableVertexAttribArray(programInfo.attribLocations.textureCoord);
   }
 
-  // Ikat buffer indeks elemen
+  // bind buffer indeks elemen
   wgl.bindBuffer(wgl.ELEMENT_ARRAY_BUFFER, buffers.indices);
 
-  // Gunakan program shader
+  // program shader
   wgl.useProgram(programInfo.program);
 
-  // Atur uniform matriks proyeksi dan model-view
+  // uniform matriks proyeksi dan model-view
   wgl.uniformMatrix4fv(
     programInfo.uniformLocations.projectionMatrix,
     false,
